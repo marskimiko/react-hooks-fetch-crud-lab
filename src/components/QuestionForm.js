@@ -35,6 +35,7 @@ function QuestionForm(props) {
         correctIndex: parseInt(formData.correctIndex),
       }),
     });
+    console.log(formData)
   }
 
   return (

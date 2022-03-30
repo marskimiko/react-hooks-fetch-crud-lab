@@ -12,10 +12,35 @@ function QuestionList() {
       });
   }, []);
 
+  function handleDeleteQuestion(deletedQuestion) {
+    const updatedQuestions = questions.filter((question) => question.id !== deletedQuestion.id);
+    setQuestions(updatedQuestions);
+  }
+
+  function handleAnswerChange(id, correctIndex) {
+    fetch(`http://localhost:4000/questions/${id}`, {
+      method: "PATCH",
+      headers: {
+        contentType: 'application/json'
+      },
+      body: JSON.stringify({ correctIndex }),
+    })
+    .then((r) => r.json())
+    .then((updatedQuestion) => {
+      const updatedQuestions = questions.map((q) => {
+        if (q.id === updatedQuestion.id) return updatedQuestion;
+        return q;
+      });
+      setQuestions(updatedQuestions)
+    })
+  }
+
   const questionItems = questions.map((q) => (
     <QuestionItem
       key={q.id}
       question={q}
+      onDeleteQuestion={handleDeleteQuestion}
+      onAnswerChange={handleAnswerChange}
     />
   ));
 
