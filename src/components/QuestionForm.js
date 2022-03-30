@@ -24,9 +24,17 @@ function QuestionForm(props) {
       headers: { 
         'Content-Type': "application/json", 
       },
-      body: JSON.stringify(formData)
-    })
-    console.log(formData);
+      body: JSON.stringify({
+        prompt: formData.prompt,
+        answers: [
+          formData.answer1, 
+          formData.answer2, 
+          formData.answer3, 
+          formData.answer4,
+        ],
+        correctIndex: parseInt(formData.correctIndex),
+      }),
+    });
   }
 
   return (
